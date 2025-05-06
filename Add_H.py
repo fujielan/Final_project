@@ -2,19 +2,19 @@ import sys
 import numpy as np
 from ase import Atoms
 from ase.io import read
-
+#import the revalent module, ase is a python based software for atomic simulation environment
 
 def main(atom_index):
     # Load the initial slab from a VASP POSCAR file
     slab = read('POSCAR_0')
 
-    # Extract structural data
+    # Extract structural data from ASE atomic index in order to pick the target atom
     positions = slab.get_positions()              # Cartesian coords of each atom
     symbols = slab.get_chemical_symbols()         # List of element symbols
     cell = slab.get_cell()                        # Unit cell vectors
     constraints = slab.constraints                # Any applied constraints
 
-    # Define the additional element and its height above the chosen atom
+    # Define the new element H  and its height above the chosen atom
     new_element = 'H'
     height_offset = 1.0                            # Distance (Å) above the atom in z-direction
 
@@ -22,7 +22,7 @@ def main(atom_index):
     base_pos = positions[atom_index].copy()
     base_pos[2] += height_offset
 
-    # Combine old and new data
+    # Combine old and new data together
     all_symbols = symbols + [new_element]
     all_positions = np.vstack([positions, base_pos])
 
