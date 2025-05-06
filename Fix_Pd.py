@@ -1,5 +1,3 @@
-# A very verbose, step-by-step beginner-style script to compute ZPE from OUTCAR
-
 # Step 1: Initialize the ZPE accumulator
 zpe_sum_meV = 0.0
 
@@ -11,24 +9,24 @@ all_lines = []
 for single_line in file_handle:
     all_lines.append(single_line)
 
-# Step 4: Close the file (important!)
+# Step 4: Close the file 
 file_handle.close()
 
-# Step 5: Loop over every line by index (rather than directly)
+# Step 5: Loop over every line by index 
 for idx in range(len(all_lines)):
     line = all_lines[idx]
     
-    # Step 5a: Look for the exact marker "f  =" indicating a real frequency
+    # Step 5 Look for the exact marker "f  =" indicating a real frequency
     contains_marker = False
     if "f  =" in line:
         contains_marker = True
     
-    # Step 5b: Look for the unwanted imaginary‑frequency marker "f/i="
+    # Step 5 then, look for the  imaginary‑frequency marker "f/i=" and try to get rid of it
     contains_imag = False
     if "f/i=" in line:
         contains_imag = True
     
-    # Step 5c: Only proceed if it's a real frequency line
+    # Step 5 Only proceed if it's a real frequency line, which means all imaginary frequency will be erased
     if contains_marker and not contains_imag:
         
         # Step 6: Split the line into parts on spaces
@@ -45,11 +43,11 @@ for idx in range(len(all_lines)):
             # Extract the 10th token (index 9)
             freq_str = tokens[9]
             
-            # Step 9: Try converting to float (with a broad exception catch)
+            # Step 9: Try converting to float 
             try:
                 freq_val = float(freq_str)
                 
-                # Step 10: Compute half of this energy (ZPE contribution)
+                # Step 10: Compute half of this energy 
                 half_energy = freq_val * 0.5
                 
                 # Step 11: Add to our running total
@@ -58,7 +56,7 @@ for idx in range(len(all_lines)):
                 # If conversion fails, just skip silently
                 skip_variable = e  # dummy use so beginner code doesn't complain
         else:
-            # If there aren't enough tokens, do nothing (could print a warning)
+            # If there aren't enough tokens, do nothing 
             not_enough = True  # another dummy variable
 
 # Step 12: Finally, print out the computed ZPE
