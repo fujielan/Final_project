@@ -1,18 +1,18 @@
+#import revalent modules
 import numpy as np
 import matplotlib.pyplot as plt
 
 def energy_diagram(data, slope=0.5, colors=None, alpha=1, label=None, step_labels=None, font_size=6):
     """
-    Plots an energy diagram for a chemical reaction using only NumPy and Matplotlib.
-    
+    The following are parameter I define and gives the details of each one I have done in code
     Parameters:
-      - data: list or array of energies at each reaction stage.
-      - slope: controls the horizontal width of each state line.
-      - colors: list with one element to define the color of the plot lines.
-      - alpha: transparency for the plot lines.
-      - label: label for the dashed connecting lines.
-      - step_labels: list of custom labels for each step (e.g., "ID + H₂(g)", "ID* + H₂(g)", etc.)
-      - font_size: size of the font for the step labels.
+      data: list or array of energies at each reaction stage.
+      slope: controls the horizontal width of each state line, I have to make sure the slop is optimal for each reaction stage without blocking words on top.
+      colors: list with one element to define the color of the plot lines.
+      alpha: transparency for the plot lines.
+      label: label for the dashed connecting lines.
+      step_labels: list of custom labels for each step for example "ID + H₂(g)", "ID* + H₂(g)", etc.
+      font_size: size of the font for the step labels.
     """
     # Set default color if none provided.
     if colors is not None and len(colors) > 0:
@@ -55,7 +55,7 @@ def energy_diagram(data, slope=0.5, colors=None, alpha=1, label=None, step_label
 # Example energy data.
 energy_data_ID = [0, -2.844, -3.732, -3.214, -4.499, -3.370, -5.795, -3.497, -1.907]
 
-# Define custom step labels.
+# Define custom step labels on top of each blue stage of corresponding steps.
 step_labels = [
     r'ID+H$_2$(g)+5*',   # Step 1: ID + H₂(g)
     r'ID*+H$_2$(g)+4*',  # Step 2: ID* + H₂(g)
