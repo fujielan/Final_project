@@ -9,10 +9,10 @@ def main(atom_index):
     slab = read('POSCAR_0')
 
     # Extract structural data from ASE atomic index in order to pick the target atom
-    positions = slab.get_positions()              # Cartesian coords of each atom
-    symbols = slab.get_chemical_symbols()         # List of element symbols
-    cell = slab.get_cell()                        # Unit cell vectors
-    constraints = slab.constraints                # Any applied constraints
+    positions = slab.get_positions()              # this is cartesian coords of each atom
+    symbols = slab.get_chemical_symbols()         # this is a list of element symbols
+    cell = slab.get_cell()                        
+    constraints = slab.constraints            
 
     # Define the new element H  and its height above the chosen atom
     new_element = 'H'
@@ -26,7 +26,7 @@ def main(atom_index):
     all_symbols = symbols + [new_element]
     all_positions = np.vstack([positions, base_pos])
 
-    # Create new slab with the extra atom, preserving cell and constraints
+    # Create new slab with the extra atom, and keeps cell and constraints
     new_slab = Atoms(
         symbols=all_symbols,
         positions=all_positions,
