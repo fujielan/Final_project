@@ -1,56 +1,57 @@
-# Step 1: Initialize the ZPE accumulator
+# This line Initialize the ZPE accumulator
 zpe_sum_meV = 0.0
 
-# Step 2: Open the OUTCAR file (we won't use a with‑block here to be more verbose)
+# Open the OUTCAR file and this file is a output file from the ZPE calculation from the 
+# computation package and this can give you a full lise the zpe lines but for this code the 
+#OUTCAR can be served as a input file.
 file_handle = open('OUTCAR', 'r')
 
-# Step 3: Read all lines into a list manually
+# Following code will read all lines into a list from the OUTCAR file
 all_lines = []
 for single_line in file_handle:
     all_lines.append(single_line)
 
-# Step 4: Close the file 
+
 file_handle.close()
 
-# Step 5: Loop over every line by index 
+#  Loop over every line and looking out for excat f terms which in outcar means the actual frequency line which is the valid line
 for idx in range(len(all_lines)):
     line = all_lines[idx]
     
-    # Step 5 Look for the exact marker "f  =" indicating a real frequency
+
     contains_marker = False
     if "f  =" in line:
         contains_marker = True
     
-    # Step 5 then, look for the  imaginary‑frequency marker "f/i=" and try to get rid of it
+    # Next steo is to look for the  imaginary‑frequency marker "f/i=" and try to get rid of it, becaus this is the "trash" data
     contains_imag = False
     if "f/i=" in line:
         contains_imag = True
     
-    # Step 5 Only proceed if it's a real frequency line, which means all imaginary frequency will be negelected
+    # This code make sure that only proceed if it's a real frequency line, which means all imaginary frequency will be negelected
     if contains_marker and not contains_imag:
         
-        # Step 6: Split the line into parts on spaces
+        # Split the line into parts on spaces
         raw_parts = line.split(' ')
         
-        # Step 7: Clean up the split so we remove empty strings
+        # Clean up the split so we remove empty strings
         tokens = []
         for part in raw_parts:
             if part != "":
                 tokens.append(part)
         
-        # Step 8: Make sure we have at least 10 tokens before indexing
+        # Make sure we have at least 10 tokens before indexing
         if len(tokens) >= 10:
             # Extract the 10th token (index 9)
             freq_str = tokens[9]
             
-            # Step 9: Try converting to float 
+            # following will convert to float 
             try:
                 freq_val = float(freq_str)
                 
-                # Step 10: Compute half of this energy 
+                # Compute half of this energy , and maks sure divide by 2 and then sum up
                 half_energy = freq_val * 0.5
                 
-                # Step 11: Add to our running total
                 zpe_sum_meV = zpe_sum_meV + half_energy
             except Exception as e:
                 # If conversion fails, just skip silently
@@ -59,5 +60,5 @@ for idx in range(len(all_lines)):
             # If there aren't enough tokens, do nothing 
             not_enough = True  # another dummy variable
 
-# Step 12: Finally, print out the computed ZPE
+# Finally, print out the computed ZPE, and show the result
 print("Zero-Point Energy (ZPE) in meV:", zpe_sum_meV)
