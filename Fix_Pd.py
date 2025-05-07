@@ -26,7 +26,7 @@ for idx in range(len(all_lines)):
     if "f/i=" in line:
         contains_imag = True
     
-    # Step 5 Only proceed if it's a real frequency line, which means all imaginary frequency will be erased
+    # Step 5 Only proceed if it's a real frequency line, which means all imaginary frequency will be negelected
     if contains_marker and not contains_imag:
         
         # Step 6: Split the line into parts on spaces
